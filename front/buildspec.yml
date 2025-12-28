@@ -1,0 +1,28 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 20
+
+  pre_build:
+    commands:
+      - cd front
+      - npm ci
+
+  build:
+    commands:
+      # 환경변수는 EC2 or CodeDeploy에서 주입 권장
+      # - export NEXT_PUBLIC_API_BASE_URL=http://10.0.2.205:8080/api
+      - npm run build
+
+artifacts:
+  base-directory: front
+  files:
+    - package.json
+    - package-lock.json
+    - .next/**/*
+    - public/**/*
+    - appspec.yml
+    - scripts/**/*
+

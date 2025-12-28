@@ -1,0 +1,22 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto17
+
+  pre_build:
+    commands:
+      - cd back
+      - chmod +x gradlew
+      - chmod +x scripts/*.sh
+
+  build:
+    commands:
+      - ./gradlew clean build -x test
+
+artifacts:
+  files:
+    - back/appspec.yml
+    - back/scripts/**/*
+    - back/build/libs/*.war
